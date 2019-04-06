@@ -7,7 +7,7 @@ class Die extends Component {
   state = {
     roll: 0,
     previous: 0,
-    history: [],
+    history: []
   }
 
   roll = (numOfSides) => () => {
@@ -18,7 +18,7 @@ class Die extends Component {
     this.setState({
       roll: result,
       history: history,
-      previous: prevRoll,
+      previous: prevRoll
     })
   }
 

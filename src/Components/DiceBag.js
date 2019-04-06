@@ -6,8 +6,9 @@ class DiceBag extends Component {
     dice: this.props.startDice,
     displayDice: [],
     selectValue: '',
-    stnd: [4,6,8,10,12,20]
+    stnd: [4, 6, 8, 10, 12, 20]
   }
+  //  const test = <div><h1>HELLO IM THE TEST</h1></div>
 
   handleChange = (event) => {
     this.setState({
@@ -25,39 +26,48 @@ class DiceBag extends Component {
   }
 
   removeDice = (index) => () => {
+    let altDisplayDiceSet = this.state.displayDice.filter(el => el.key !== `${index}`)
     let altDiceSet = this.state.dice.filter(el => el !== this.state.dice[index])
-    console.log(altDiceSet)
     this.setState({
+      displayDice: altDisplayDiceSet,
       dice: altDiceSet
+    }, () => { this.renderDice() })
+  }
+
+
+
+  renderDice = () => {
+    let displayDice = this.state.dice.map((item, i) =>
+      <div key={i} style={{ display: 'flex', flexDirection: 'row', textDecoration: 'none' }}>
+        <Die sides={item} style={{ width: 'auto' }} />
+        <button onClick={this.removeDice(i)} style={{ width: '57px' }}>Remove</button>
+      </div>
+    )
+    console.log(displayDice)
+    this.setState({
+      displayDice
     })
   }
 
   componentDidMount() {
-    if(this.props.startDice[0] === 'stnd'){
+    if (this.props.startDice[0] === 'stnd') {
       this.setState({
         dice: this.state.stnd
-      })
-    }else{
+      }, () => { this.renderDice() })
+    } else {
       this.setState({
         dice: this.props.startDice
-      })
+      }, () => { this.renderDice() })
     }
   }
 
   render() {
     return (
-      <div style={{ display: 'flex', flexFlow: 'row wrap', textAlign: 'center',  margin: '3% 5%' }}>
+      <div style={{ display: 'flex', flexFlow: 'row wrap', textAlign: 'center', margin: '3% 5%' }}>
         <h1 style={{ width: '100%' }}>Welcome to the DiceBag!</h1>
         <div style={{ width: '75%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
           <h2 style={{ width: '100%', textAlign: 'center' }}>Current Dice</h2>
-          {
-            this.state.dice.map((item, i) =>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Die sides={item} style={{ width: 'auto' }} />
-                <button onClick={this.removeDice(i)} style={{ width: '57px' }}>Remove</button>
-              </div>
-            )
-          }
+          {this.state.displayDice}
         </div>
         <div style={{ width: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <h2 style={{ width: '100%', textAlign: 'center' }}>Add a new Die or Die Set</h2>
