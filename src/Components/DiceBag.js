@@ -5,10 +5,9 @@ class DiceBag extends Component {
   state = {
     dice: this.props.startDice,
     displayDice: [],
-    selectValue: '',
+    selectValue: 4,
     stnd: [4, 6, 8, 10, 12, 20]
   }
-  //  const test = <div><h1>HELLO IM THE TEST</h1></div>
 
   handleChange = (event) => {
     this.setState({
@@ -19,22 +18,23 @@ class DiceBag extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     let altDiceSet = this.state.dice
-    this.state.selectValue === 'stnd' ? this.state.stnd.map(el => altDiceSet.push(el)) : altDiceSet.push(this.state.selectValue)
+    this.state.selectValue === 'stnd' ? altDiceSet = [...altDiceSet, 4, 6, 8, 10, 12, 20] : altDiceSet.push(this.state.selectValue)
     this.setState({
       dice: altDiceSet,
-    })
+      displayDice: altDiceSet
+    }, () => { this.renderDice() })
   }
 
   removeDice = (index) => () => {
     let altDisplayDiceSet = this.state.displayDice.filter(el => el.key !== `${index}`)
-    let altDiceSet = this.state.dice.filter(el => el !== this.state.dice[index])
+    let altDiceSet = this.state.dice
+    altDiceSet.splice(index, 1)
     this.setState({
       displayDice: altDisplayDiceSet,
       dice: altDiceSet
-    }, () => { this.renderDice() })
+    }, () => { this.renderDice() }
+    )
   }
-
-
 
   renderDice = () => {
     let displayDice = this.state.dice.map((item, i) =>
@@ -43,7 +43,6 @@ class DiceBag extends Component {
         <button onClick={this.removeDice(i)} style={{ width: '57px' }}>Remove</button>
       </div>
     )
-    console.log(displayDice)
     this.setState({
       displayDice
     })
@@ -69,7 +68,7 @@ class DiceBag extends Component {
           <h2 style={{ width: '100%', textAlign: 'center' }}>Current Dice</h2>
           {this.state.displayDice}
         </div>
-        <div style={{ width: '25%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ width: '25%', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
           <h2 style={{ width: '100%', textAlign: 'center' }}>Add a new Die or Die Set</h2>
           <form
             onSubmit={this.onSubmit}
@@ -79,8 +78,8 @@ class DiceBag extends Component {
               <option value={'4'}>4 Sided Die</option>
               <option value={'6'}>6 Sided Die</option>
               <option value={'8'}>8 Sided Die</option>
-              <option value={'0'}>10 Sided Die (0-9)</option>
-              <option value={'00'}>10 Sided Die (00-90)</option>
+              <option value={'10'}>10 Sided Die (0-9)</option>
+              <option value={'0'}>10 Sided Die (00-90)</option>
               <option value={'12'}>12 Sided Die</option>
               <option value={'20'}>20 Sided Die</option>
               <option value={'stnd'}>Standard D&D Set</option>
