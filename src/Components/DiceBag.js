@@ -62,13 +62,36 @@ class DiceBag extends Component {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexFlow: 'row wrap', textAlign: 'center', margin: '3% 5%' }}>
+      <div style={{ 
+        display: 'flex', 
+        flexFlow: 'row wrap', 
+        textAlign: 'center', 
+        margin: '3% 5%',
+      }}>
         <h1 style={{ width: '100%' }}>Welcome to the DiceBag!</h1>
-        <div style={{ width: '75%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+        <div style={{ 
+          width: '72.5%', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          textAlign: 'left',
+          backgroundColor: 'lightgrey',
+          borderRadius: '10px',
+          margin: '10px',
+          padding: '10px'
+        }}>
           <h2 style={{ width: '100%', textAlign: 'center' }}>Current Dice</h2>
           {this.state.displayDice}
         </div>
-        <div style={{ width: '25%', display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+        <div style={{ 
+          width: '20%', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          textAlign: 'center',
+          backgroundColor: 'lightgrey',
+          borderRadius: '10px',
+          margin: '10px',
+          padding: '10px'
+        }}>
           <h2 style={{ width: '100%', textAlign: 'center' }}>Add a new Die or Die Set</h2>
           <form
             onSubmit={this.onSubmit}
