@@ -55,7 +55,7 @@ class DiceBag extends Component {
       }, () => { this.renderDice() })
     } else {
       this.setState({
-        dice: this.props.startDice
+        dice: this.state.stnd
       }, () => { this.renderDice() })
     }
   }
